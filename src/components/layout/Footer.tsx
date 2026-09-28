@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
                 <TwitterIcon />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/ayoade-peter-b8192b3b7/"
                 target="_blank"
                 rel="noreferrer"
                 className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-sky-400/40 hover:bg-white/10 transition-all"
@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
                 <LinkedInIcon />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/peter_bookmarketing/"
                 target="_blank"
                 rel="noreferrer"
                 className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-sky-400/40 hover:bg-white/10 transition-all"

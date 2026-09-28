@@ -91,8 +91,8 @@ export const About: React.FC = () => {
               </div>
             </div>
 
-            {/* CTA */}
-            <div className="pt-6">
+            {/* CTA & Socials */}
+            <div className="pt-6 flex flex-wrap items-center gap-3">
               <Button
                 variant="primary"
                 size="md"
@@ -101,6 +101,22 @@ export const About: React.FC = () => {
               >
                 Let’s Collaborate on Your Vision
               </Button>
+              <a
+                href="https://www.linkedin.com/in/ayoade-peter-b8192b3b7/"
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2.5 rounded-xl border border-white/10 hover:border-sky-400/40 bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-all inline-flex items-center gap-1.5"
+              >
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="https://www.instagram.com/peter_bookmarketing/"
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2.5 rounded-xl border border-white/10 hover:border-pink-500/40 bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-all inline-flex items-center gap-1.5"
+              >
+                <span>Instagram</span>
+              </a>
             </div>
           </div>
         </div>
