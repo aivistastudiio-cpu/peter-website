@@ -304,11 +304,8 @@ Brief: ${formData.description || 'Discussing new project'}`;
                 <form
                   onSubmit={handleSubmit}
                   name="project-inquiry"
-                  method="POST"
-                  data-netlify="true"
                   className="space-y-6"
                 >
-                  <input type="hidden" name="form-name" value="project-inquiry" />
 
                   {/* Name & Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
