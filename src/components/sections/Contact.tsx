@@ -24,6 +24,7 @@ interface ContactProps {
 
 export const Contact: React.FC<ContactProps> = ({ selectedServiceCategory }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -89,9 +90,36 @@ export const Contact: React.FC<ContactProps> = ({ selectedServiceCategory }) => 
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      await fetch('https://formsubmit.co/ajax/anthonypaul6570@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company || 'N/A',
+          projectType: formData.projectType,
+          budget: formData.budget,
+          timeline: formData.timeline,
+          description: formData.description,
+          _subject: `New AI Video Project Inquiry from ${formData.name || 'Client'} (${formData.projectType})`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+    } catch (error) {
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const generateWhatsAppLink = () => {
@@ -182,7 +210,7 @@ Brief: ${formData.description || 'Discussing new project'}`;
 
                 {/* 3. Direct Email Action */}
                 <a
-                  href={`mailto:peter@ayoade.studio?subject=AI%20Video%20Project%20Inquiry%20from%20${encodeURIComponent(formData.name || 'Client')}`}
+                  href={`mailto:anthonypaul6570@gmail.com?subject=AI%20Video%20Project%20Inquiry%20from%20${encodeURIComponent(formData.name || 'Client')}`}
                   className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-sky-400/40 hover:bg-white/10 transition-all text-white group"
                 >
                   <div className="flex items-center gap-3">
@@ -191,7 +219,7 @@ Brief: ${formData.description || 'Discussing new project'}`;
                     </div>
                     <div>
                       <span className="font-semibold text-sm block">Direct Studio Email</span>
-                      <span className="text-xs text-slate-400 font-mono">peter@ayoade.studio</span>
+                      <span className="text-xs text-slate-400 font-mono">anthonypaul6570@gmail.com</span>
                     </div>
                   </div>
                   <Send className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
@@ -435,10 +463,11 @@ Brief: ${formData.description || 'Discussing new project'}`;
                       variant="primary"
                       size="lg"
                       type="submit"
+                      disabled={isSubmitting}
                       className="w-full justify-center"
-                      icon={<Send className="w-4 h-4" />}
+                      icon={<Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />}
                     >
-                      Submit Project Inquiry
+                      {isSubmitting ? 'Sending Brief...' : 'Submit Project Inquiry'}
                     </Button>
 
                     <div className="flex items-center justify-center gap-2 pt-1 text-xs text-slate-400">
