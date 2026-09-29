@@ -69,25 +69,29 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject }) => {
               >
                 {/* Media Container */}
                 <div className="relative aspect-video w-full overflow-hidden bg-black">
-                  {/* Poster Image */}
-                  <img
-                    src={project.thumbnail}
-                    alt={project.title}
-                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${
-                      isHovered ? 'opacity-20' : 'opacity-100'
-                    }`}
-                    loading="lazy"
-                  />
-
-                  {/* Micro Video Hover Preview */}
-                  {isHovered && project.previewVideoUrl && (
+                  {project.previewVideoUrl || project.videoUrl ? (
                     <video
-                      src={project.previewVideoUrl}
+                      src={project.previewVideoUrl || project.videoUrl}
+                      poster={project.thumbnail}
                       autoPlay
                       muted
                       loop
                       playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
+                      preload="metadata"
+                      ref={(el) => {
+                        if (el) {
+                          el.muted = true;
+                          el.play().catch(() => {});
+                        }
+                      }}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <img
+                      src={project.thumbnail}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
                     />
                   )}
 
@@ -102,10 +106,10 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject }) => {
                     <span>{project.duration}</span>
                   </div>
 
-                  {/* Centered Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:bg-sky-500/30 group-hover:border-sky-400/60 transition-all duration-300">
-                      <Play className="w-6 h-6 fill-current ml-0.5 text-sky-300" />
+                  {/* Play & Expand Hover Indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[1px]">
+                    <div className="w-14 h-14 rounded-full bg-sky-500/80 backdrop-blur-md border border-sky-300/60 flex items-center justify-center text-white shadow-2xl scale-90 group-hover:scale-100 transition-transform duration-300">
+                      <Play className="w-6 h-6 fill-current ml-0.5 text-white" />
                     </div>
                   </div>
                 </div>

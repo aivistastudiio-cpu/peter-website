@@ -70,8 +70,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
               poster={project.thumbnail}
               controls
               autoPlay
+              muted
+              loop
               playsInline
               preload="auto"
+              ref={(el) => {
+                if (el) {
+                  el.muted = true;
+                  el.play().catch(() => {});
+                }
+              }}
               className="w-full h-full object-cover rounded-none"
             />
           </div>

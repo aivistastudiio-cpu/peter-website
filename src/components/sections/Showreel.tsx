@@ -1,14 +1,25 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize2, Sparkles } from 'lucide-react';
 import { SectionHeading } from '../ui/SectionHeading';
 import { Badge } from '../ui/Badge';
 
 export const Showreel: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        setIsPlaying(false);
+      });
+    }
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;

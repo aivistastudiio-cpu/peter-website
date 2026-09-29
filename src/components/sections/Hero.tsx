@@ -20,6 +20,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenShowreel }) => {
           loop
           playsInline
           preload="auto"
+          ref={(el) => {
+            if (el) {
+              el.muted = true;
+              el.play().catch(() => {});
+            }
+          }}
           className="w-full h-full object-cover opacity-75 sm:opacity-70 filter brightness-95 contrast-110 scale-105"
         >
           <source src="/videos/hero-bg.mp4" type="video/mp4" />
