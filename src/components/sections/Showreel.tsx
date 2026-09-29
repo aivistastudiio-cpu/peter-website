@@ -54,10 +54,11 @@ export const Showreel: React.FC = () => {
               ref={videoRef}
               src="/videos/showreel.mp4"
               poster="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80"
+              autoPlay
+              muted
               loop
               playsInline
-              preload="metadata"
-              muted={isMuted}
+              preload="auto"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               className="w-full h-full object-cover cursor-pointer"

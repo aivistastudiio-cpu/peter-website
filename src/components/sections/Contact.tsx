@@ -131,7 +131,7 @@ Budget: ${formData.budget}
 Timeline: ${formData.timeline}
 Brief: ${formData.description || 'Discussing new project'}`;
 
-    return `https://wa.me/?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/2348165704980?text=${encodeURIComponent(text)}`;
   };
 
   return (
