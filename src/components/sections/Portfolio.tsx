@@ -16,25 +16,37 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject }) => {
   const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
 
   const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'commercial', label: 'Commercials & Ads' },
-    { id: 'ugc', label: 'UGC & Social' },
-    { id: 'animation', label: 'Animation & Narrative' },
+    { id: 'all', label: 'All 12 Services' },
+    { id: 'ugc', label: 'AI UGC & Unboxing' },
+    { id: 'trailer', label: 'Movie & Book Trailers' },
+    { id: 'film', label: 'Narrative & Films' },
+    { id: 'commercial', label: 'Product Commercials' },
+    { id: 'animation', label: 'Cartoons & Animation' },
+    { id: 'media', label: 'Podcasts & YouTube' },
+    { id: 'explainer', label: 'B2B Explainers' },
   ];
 
   const filteredProjects =
     activeCategory === 'all'
       ? PROJECTS
-      : PROJECTS.filter((p) => p.category === activeCategory);
+      : PROJECTS.filter((p) => {
+          if (activeCategory === 'media') {
+            return p.category === 'podcast' || p.category === 'youtube' || p.category === 'music';
+          }
+          if (activeCategory === 'ugc') {
+            return p.category === 'ugc';
+          }
+          return p.category === activeCategory;
+        });
 
   return (
     <section id="work" className="py-24 relative bg-[#05070B]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          badge="Selected Productions"
-          title="Curated AI Video"
-          titleHighlight="Portfolio"
-          subtitle="Explore recent commercial spots, high-velocity social campaigns, and conceptual world-building. Click any project for the full video and case breakdown."
+          badge="Complete Service Portfolio"
+          title="12 Original AI Video"
+          titleHighlight="Productions"
+          subtitle="Explore our dedicated portfolio samples across all 12 core AI video services. Every production is engineered with cinematic lighting, prompt continuity, and professional audio design."
         />
 
         {/* Category Filter Tabs */}
@@ -69,7 +81,16 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject }) => {
               >
                 {/* Media Container */}
                 <div className="relative aspect-video w-full overflow-hidden bg-black">
-                  {project.previewVideoUrl || project.videoUrl ? (
+                  {/* Background High-Res AI Poster (Always visible for zero-flicker loading) */}
+                  <img
+                    src={project.thumbnail}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+
+                  {/* Autoplaying Looping Video Layer */}
+                  {(project.previewVideoUrl || project.videoUrl) && (
                     <video
                       src={project.previewVideoUrl || project.videoUrl}
                       poster={project.thumbnail}
@@ -78,20 +99,16 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onSelectProject }) => {
                       loop
                       playsInline
                       preload="metadata"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
                       ref={(el) => {
                         if (el) {
                           el.muted = true;
                           el.play().catch(() => {});
                         }
                       }}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    <img
-                      src={project.thumbnail}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   )}
 

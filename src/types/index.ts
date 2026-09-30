@@ -1,4 +1,13 @@
-export type ProjectCategory = 'commercial' | 'ugc' | 'animation';
+export type ProjectCategory =
+  | 'commercial'
+  | 'ugc'
+  | 'animation'
+  | 'trailer'
+  | 'film'
+  | 'podcast'
+  | 'explainer'
+  | 'social'
+  | string;
 
 export interface CaseStudy {
   problem: string;
